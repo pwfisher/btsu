@@ -153,7 +153,7 @@ foreach ($_SETS as $set) {
 		// if retain_days is not set or is zero, we'll never prune anything, so don't bother
 		$retain_days = getSetValue($set,'retain_days');
 		if (!$retain_days) {
-			printQuiet("retain_days is not set (or is empty) which means we'll never find anything to prune. Skipping pruning.\n");
+			printVerbose("retain_days is not set (or is empty) which means we'll never find anything to prune. Skipping pruning.\n");
 			continue;
 		}
 

@@ -38,7 +38,7 @@ class s3backup_mysql extends s3backup_type {
 		if ($return!=0) {
 			throw new Exception(implode("\n",$output));
 		}
-		return ".gz";
+		return ".sql.gz";
 	}
 
 }

@@ -124,7 +124,7 @@ foreach ($_SETS as $set) {
                     $size = (round(($size/1024/1024)*10)/10)." MB   ";
                 }
                 elseif ($size>1024) {
-                    $size = ($size/1024)." KB   ";
+                    $size = (round($size/1024))." KB   ";
                 }
                 else {
                     $size = $size." bytes";
@@ -174,7 +174,6 @@ foreach ($_SETS as $set) {
         $pattern .= ')\/('.preg_quote($set).'.*)$/';
         foreach ($objects as $manifest=>$data) {
             if (preg_match($pattern,$manifest,$temp)) {
-                printQuiet("  Restoring $manifest...\n");
                 // if they specified a single backup to restore, throw it in the directory
                 if ($datetime) {
                     $localfile = $_ARGS[0].'/'.$temp[2];
@@ -187,7 +186,14 @@ foreach ($_SETS as $set) {
                     }
                     $localfile = $_ARGS[0].'/'.$temp[1].'/'.$temp[2];
                 }
-                $s3->getObject($bucket_name, $manifest, $localfile);
+                // if the localfile already exists, don't overwrite it!
+                if (file_exists($localfile)) {
+                    printError("$localfile already exists, NOT overwriting!\n");
+                }
+                else {
+                    printQuiet("  Restoring $manifest...\n");
+                    $s3->getObject($bucket_name, $manifest, $localfile);
+                }
                 $restored = true;
             }
         }

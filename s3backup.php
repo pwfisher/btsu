@@ -4,10 +4,10 @@
  * btsu!
  *
  * Backup and restore scripts for Amazon S3.
- * 
+ *
  * Copyright (c) 2012, Travis Richardson
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *     * Redistributions of source code must retain the above copyright
@@ -18,7 +18,7 @@
  *     * Neither the name of the Travis Richardson nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -168,7 +168,7 @@ foreach ($_SETS as $set) {
 		// init some commonly used vars to keep code cleaner / more efficient
 		$hour = date('H',START_TIME);
 		$min = date('i',START_TIME);
-		$sec = date('S',START_TIME);
+		$sec = date('s',START_TIME);
 		$month = date('m',START_TIME);
 		$day = date('d',START_TIME);
 		$year = date('Y',START_TIME);
@@ -179,25 +179,25 @@ foreach ($_SETS as $set) {
 
 			// if it's less than "retain_days" old, we're keeping it
 			if ($time<START_TIME-mktime($hour,$min,$sec,$month,$day-$retain_days,$year)) {
-				printVerbose("Keeping $manfest (within retained days limit)\n");
+				printVerbose("Keeping $manifest (within retained days limit)\n");
 				continue;
 			}
 
 			// if it's on a sunday, and it's less than retain_weeks old, we're keeping it
 			if (date('w',$time)==0 && (!$retain_weeks || $time<mktime($hour,$min,$sec,$month,$day-(7*$retain_weeks),$year))) {
-				printVerbose("Keeping $manfest (on Sunday and within retained weeks limit)\n");
+				printVerbose("Keeping $manifest (on Sunday and within retained weeks limit)\n");
 				continue;
 			}
 
 			//  if it's on the first of the month, and it's less than retain_months old, we're keeping it
 			if (date('j',$time)==1 && (!$retain_months || $time<mktime($hour,$min,$sec,$month-$retain_months,$day,$year))) {
-				printVerbose("Keeping $manfest (on the first and within retained months limit)\n");
+				printVerbose("Keeping $manifest (on the first and within retained months limit)\n");
 				continue;
 			}
 
 			//  if it's on the first of the year, and it's less than retain_years old, we're keeping it
 			if (date('z',$time)==0 && (!$retain_years || $time<mktime($hour,$min,$sec,$month,$day,$year-$retain_years))) {
-				printVerbose("Keeping $manfest (on Jan 1st and within retained years limit)\n");
+				printVerbose("Keeping $manifest (on Jan 1st and within retained years limit)\n");
 				continue;
 			}
 

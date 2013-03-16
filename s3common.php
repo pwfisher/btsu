@@ -157,7 +157,7 @@ function dieError($error,$code=1) {
 
 /**
  * parseArgs by Patrick Fisher 
- * http://pwfisher.com/nucleus/index.php?itemid=45
+ * https://github.com/pwfisher/CommandLine.php
  */
 function parseArgs($argv){
     array_shift($argv); $o = array();
